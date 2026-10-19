@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>半导体销售陪练陪跑</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark" id="brandMark"></div>
+      <div class="brand-text">
+        <strong>半导体销售陪跑</strong>
+        <span>新人版 v1</span>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav"></nav>
+
+    <div class="side-foot">
+      <div class="mode-chip" id="modeChip"></div>
+      <p>数据只存在这台电脑的浏览器里，不上传。</p>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section class="view" id="view-today" hidden>
+      <header class="view-head">
+        <div>
+          <h1>今天</h1>
+          <p class="sub" id="todayLine">正在算…</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" id="btnDiagnose" type="button">我卡住了</button>
+          <button class="btn primary" id="btnLogActivity" type="button">记一笔</button>
+        </div>
+      </header>
+      <div class="today-grid">
+        <div>
+          <h2 class="sec-title">今日待办</h2>
+          <div id="todoList"></div>
+        </div>
+        <aside class="today-side">
+          <h2 class="sec-title">本周节奏</h2>
+          <div id="weekStats"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-agent" hidden>
+      <header class="view-head">
+        <div>
+          <h1>Agent</h1>
+          <p class="sub">给它一家公司或一句话。它会查台账、建档案、定位产业链、算意向分、起草开场。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" id="btnAgentReset" type="button">重开</button>
+        </div>
+      </header>
+
+      <div class="agent-shell">
+        <div class="agent-chat">
+          <div class="agent-log" id="agentLog"></div>
+          <div class="review-panel" id="reviewPanel" hidden>
+            <div class="review-head">
+              <strong>复盘一段真实对话</strong>
+              <button class="btn sm ghost" id="btnReviewClose" type="button">收起</button>
+            </div>
+            <textarea id="reviewInput" placeholder="把微信聊天、邮件往来或通话记录粘进来。越接近原话越好。"></textarea>
+            <div class="row-gap">
+              <button class="btn primary" id="btnReviewRun" type="button">开始复盘</button>
+              <span class="tip" id="reviewHint">没配大模型时，走本地规则检查。</span>
+            </div>
+          </div>
+          <div class="composer">
+            <textarea id="agentInput" placeholder="例如：帮我看看常州恒力电源科技，我们是做工业连接器的，怎么开口？"></textarea>
+            <div class="composer-bar">
+              <span class="tip">Ctrl+Enter 发送。它没有联网能力，工商信息要你提供。</span>
+              <button class="btn primary" id="btnAgentSend" type="button">发送</button>
+            </div>
+          </div>
+        </div>
+        <aside class="agent-side">
+          <h3>可以这样说</h3>
+          <button class="agent-ex" type="button" data-agent-example="帮我看看常州恒力电源科技，我们是做工业连接器的，该怎么开口">新建一家公司，走完整流程</button>
+          <button class="agent-ex" type="button" data-agent-example="我手上哪几家公司最值得先打？">问它哪几家最该先打</button>
+          <button class="agent-ex" type="button" data-agent-example="我不确定我卖的东西在产业链哪一层，帮我判断一下">搞不清自己在产业链哪层</button>
+          <button class="agent-ex" type="button" data-agent-example="给我一版加微信的话术，我们做屏模组">直接要一版加微信话术</button>
+          <button class="agent-ex" type="button" id="btnAgentReview">复盘一段对话</button>
+          <div class="agent-note">
+            <b>它现在能做什么</b>
+            <p>查本机台账、建/改公司档案、给意向打分、按渠道起草话术。</p>
+            <b>它不能做什么</b>
+            <p>不能联网查工商，不能替你打电话。数据要你喂，判断它来给。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-sparring">
+      <header class="view-head">
+        <div>
+          <h1>陪练</h1>
+          <p class="sub">挑一个真实会遇到的场景，对方会连问几轮。答完立刻给反馈。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" id="sparringRandom" type="button">随机场景</button>
+        </div>
+      </header>
+
+      <div class="sparring-wrap">
+        <div class="scene-list" id="sceneList"></div>
+
+        <div class="chat-panel" id="chatPanel">
+          <div class="empty-state">
+            <div class="empty-icon" id="emptyIcon"></div>
+            <h2>左边选一个场景</h2>
+            <p>建议从"第一次陌生电话"或"客户研发追问技术细节"开始。答得不好不要紧，难看的分数比舒服的空白有用。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-coaching" hidden>
+      <header class="view-head">
+        <div>
+          <h1>陪跑</h1>
+          <p class="sub">每个项目一张卡。填不满的格子，就是你在客户那儿没问出来的东西。</p>
+        </div>
+        <div class="head-actions">
+          <button class="btn ghost" id="btnImport" type="button">导入</button>
+          <button class="btn ghost" id="btnExport" type="button">导出</button>
+          <button class="btn primary" id="btnNewProject" type="button">新建项目</button>
+        </div>
+      </header>
+
+      <div class="stats" id="statsRow"></div>
+
+      <div class="coach-wrap">
+        <div class="project-list" id="projectList"></div>
+        <div class="project-detail" id="projectDetail">
+          <div class="empty-state">
+            <div class="empty-icon" id="emptyIcon2"></div>
+            <h2>还没有项目</h2>
+            <p>新建一张项目卡，把你手头跟的客户放进来。哪怕信息残缺，先建起来，缺什么一眼就看得到。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-prospect" hidden>
+      <header class="view-head">
+        <div>
+          <h1>找客户</h1>
+          <p class="sub">先看清产业链在哪一层找，再查工商筛意向，最后才是开口。</p>
+        </div>
+        <div class="head-actions">
+          <div class="seg" id="prospectSeg">
+            <button class="seg-btn active" data-ptab="chain" type="button">产业链地图</button>
+            <button class="seg-btn" data-ptab="targets" type="button">目标公司</button>
+            <button class="seg-btn" data-ptab="talk" type="button">怎么开口</button>
+          </div>
+        </div>
+      </header>
+      <div id="prospectBody"></div>
+    </section>
+
+    <section class="view" id="view-playbook" hidden>
+      <header class="view-head">
+        <div>
+          <h1>底座</h1>
+          <p class="sub">术语、客户角色、阶段标准、内部流程、红线。遇到不确定就回来查。</p>
+        </div>
+        <div class="head-actions">
+          <div class="search-box">
+            <span id="searchIcon"></span>
+            <input type="search" id="playbookSearch" placeholder="搜术语、角色、流程，比如 PPAP">
+          </div>
+        </div>
+      </header>
+      <div class="playbook" id="playbook"></div>
+    </section>
+
+    <section class="view" id="view-settings" hidden>
+      <header class="view-head">
+        <div>
+          <h1>设置</h1>
+          <p class="sub">不填 API Key 也能完整使用，陪练走内置脚本引擎。填了之后对方由大模型扮演，回应更活。</p>
+        </div>
+      </header>
+
+      <div class="settings-grid">
+        <div class="panel">
+          <h2>大模型（可选）</h2>
+          <label class="field">
+            <span>接口地址</span>
+            <input type="text" id="cfgBaseUrl" placeholder="https://api.openai.com/v1" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>API Key</span>
+            <input type="password" id="cfgApiKey" placeholder="sk-..." autocomplete="off">
+          </label>
+          <label class="field">
+            <span>模型名</span>
+            <input type="text" id="cfgModel" placeholder="gpt-4o-mini" autocomplete="off">
+          </label>
+          <div class="row-gap">
+            <button class="btn primary" id="btnSaveCfg" type="button">保存</button>
+            <button class="btn ghost" id="btnTestCfg" type="button">测试连接</button>
+            <button class="btn ghost" id="btnClearCfg" type="button">清空</button>
+          </div>
+          <p class="hint" id="cfgHint">Key 只存在本机 localStorage，不会发到除了你填的接口以外的任何地方。</p>
+        </div>
+
+        <div class="panel">
+          <h2>数据</h2>
+          <p class="muted">项目卡和陪练记录保存在浏览器本地。换浏览器、清缓存会丢，重要数据记得导出。</p>
+          <div class="row-gap">
+            <button class="btn ghost" id="btnExportAll" type="button">导出全部 JSON</button>
+            <button class="btn danger" id="btnResetAll" type="button">清空本机数据</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop" hidden>
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+<input type="file" id="fileInput" accept=".json,application/json" hidden>
+<input type="file" id="csvInput" accept=".csv,.txt,text/csv" hidden>
+
+<script src="js/icons.js"></script>
+<script src="js/data-scenarios.js"></script>
+<script src="js/data-playbook.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/app.js"></script>
+<script src="js/agent.js"></script>
+</body>
+</html>

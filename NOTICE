@@ -1,0 +1,31 @@
+本仓库的许可范围
+================
+
+LICENSE 里的 MIT 协议只覆盖**代码**：HTML、CSS、JavaScript 和构建脚本。
+
+不覆盖**内容**。
+
+内容来源说明
+------------
+
+下列内容整理自一个公开抖音账号（抖音号 64202157738，账号名 Salesman）的文章，
+经过压缩改写，不是原文转载，但观点的原始出处是他的：
+
+- js/data-playbook.js 里 id 为 choose / productknowledge / career / entertain / companies 的五节
+- js/data-playbook.js 里的 ORDER_FLOW（订单全流程）和 ESCALATION（异常升级路径）
+- README 中标注了来源的段落
+
+公开发布前必须处理这一项，三选一：
+
+1. 删除这几节，用你自己的实战案例重写；
+2. 取得原作者书面授权，并在 NOTICE 里写明授权范围；
+3. 只在自己或小范围内部使用，不公开发布。
+
+另外，entertain 一节涉及商务招待的具体做法。公开发布前应当删除其中
+涉及返点、二场、红包的段落，只保留目的、标准、费用归属这类中性内容，
+具体以你所在公司的合规制度为准。
+
+第三方资源
+----------
+
+js/icons.js 中的图标路径取自 lucide（https://lucide.dev），ISC License。
